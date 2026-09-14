@@ -15,10 +15,16 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 
 add_executable(topic_helloworld_pub src/topic_helloworld_pub.cpp)
-ament_target_dependencies(topic_helloworld_pub rclcpp std_msgs)
+target_link_libraries(topic_helloworld_pub
+  rclcpp::rclcpp
+  std_msgs::std_msgs
+)
 
 add_executable(topic_helloworld_sub src/topic_helloworld_sub.cpp)
-ament_target_dependencies(topic_helloworld_sub rclcpp std_msgs)
+target_link_libraries(topic_helloworld_sub
+  rclcpp::rclcpp
+  std_msgs::std_msgs
+)
 
 install(TARGETS
   topic_helloworld_pub

@@ -15,10 +15,18 @@ find_package(rclcpp_action REQUIRED)
 find_package(learning_interface REQUIRED)
 
 add_executable(action_move_server src/action_move_server.cpp)
-ament_target_dependencies(action_move_server rclcpp rclcpp_action learning_interface)
+target_link_libraries(action_move_server
+  rclcpp::rclcpp
+  rclcpp_action::rclcpp_action
+  ${learning_interface_TARGETS}
+)
 
 add_executable(action_move_client src/action_move_client.cpp)
-ament_target_dependencies(action_move_client rclcpp rclcpp_action learning_interface)
+target_link_libraries(action_move_client
+  rclcpp::rclcpp
+  rclcpp_action::rclcpp_action
+  ${learning_interface_TARGETS}
+)
 
 install(TARGETS
   action_move_server

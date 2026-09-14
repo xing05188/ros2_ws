@@ -10,9 +10,9 @@
 
 
 #include "rclcpp/rclcpp.hpp"                       // ROS2 C++接口库
-#include "tf2/LinearMath/Quaternion.h"             // 四元数运算库
+#include "tf2/LinearMath/Quaternion.hpp"           // 四元数运算库
 #include "tf2_ros/transform_broadcaster.h"         // TF坐标变换广播器
-#include "turtlesim/msg/pose.hpp"                  // turtlesim小海龟位置消息
+#include "turtlesim_msgs/msg/pose.hpp"             // turtlesim小海龟位置消息
 #include "geometry_msgs/msg/transform_stamped.hpp" // 坐标变换消息
 
 class TurtleTFBroadcaster : public rclcpp::Node
@@ -34,14 +34,14 @@ class TurtleTFBroadcaster : public rclcpp::Node
             std::string topic_name = stream.str();
 
             // 创建一个订阅者，订阅海龟的位置消息
-            subscription_ = this->create_subscription<turtlesim::msg::Pose>(
+            subscription_ = this->create_subscription<turtlesim_msgs::msg::Pose>(
                 topic_name, 10,
                 std::bind(&TurtleTFBroadcaster::turtle_pose_callback, this, std::placeholders::_1));
         }
 
     private:
         // 创建一个处理海龟位置消息的回调函数，将位置消息转变成坐标变换
-        void turtle_pose_callback(const std::shared_ptr<turtlesim::msg::Pose> msg)
+        void turtle_pose_callback(const std::shared_ptr<turtlesim_msgs::msg::Pose> msg)
         {
             // 创建一个坐标变换的消息对象
             geometry_msgs::msg::TransformStamped t;
@@ -71,7 +71,7 @@ class TurtleTFBroadcaster : public rclcpp::Node
             tf_broadcaster_->sendTransform(t);
         }
 
-        rclcpp::Subscription<turtlesim::msg::Pose>::SharedPtr subscription_;
+        rclcpp::Subscription<turtlesim_msgs::msg::Pose>::SharedPtr subscription_;
         std::unique_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
         std::string turtlename_;
 };

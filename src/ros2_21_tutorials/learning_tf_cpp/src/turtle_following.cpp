@@ -11,10 +11,10 @@
 #include "geometry_msgs/msg/transform_stamped.hpp"
 #include "geometry_msgs/msg/twist.hpp"
 #include "rclcpp/rclcpp.hpp"
-#include "tf2/exceptions.h"
+#include "tf2/exceptions.hpp"
 #include "tf2_ros/transform_listener.h"
 #include "tf2_ros/buffer.h"
-#include "turtlesim/srv/spawn.hpp"
+#include "turtlesim_msgs/srv/spawn.hpp"
 
 using namespace std::chrono_literals;
 
@@ -36,7 +36,7 @@ public:
         tf_listener_ = std::make_shared<tf2_ros::TransformListener>(*tf_buffer_);
 
         // 创建一个请求产生海龟的客户端
-        spawner_ = this->create_client<turtlesim::srv::Spawn>("spawn");
+        spawner_ = this->create_client<turtlesim_msgs::srv::Spawn>("spawn");
 
         // 创建跟随运动海龟的速度话题
         publisher_ = this->create_publisher<geometry_msgs::msg::Twist>("turtle2/cmd_vel", 1);
@@ -95,7 +95,7 @@ private:
             // 如果海龟生成服务器已经准备就绪
             if (spawner_->service_is_ready()) {
                 // 创建一个请求的数据,设置请求数据的内容，包括海龟名、xy位置、姿态
-                auto request = std::make_shared<turtlesim::srv::Spawn::Request>();
+                auto request = std::make_shared<turtlesim_msgs::srv::Spawn::Request>();
                 request->x = 4.0;
                 request->y = 2.0;
                 request->theta = 0.0;
@@ -103,7 +103,7 @@ private:
 
                 // 发送服务请求
                 using ServiceResponseFuture =
-                rclcpp::Client<turtlesim::srv::Spawn>::SharedFuture;
+                rclcpp::Client<turtlesim_msgs::srv::Spawn>::SharedFuture;
                 auto response_received_callback = [this](ServiceResponseFuture future) {
                     auto result = future.get();
                     if (strcmp(result->name.c_str(), "turtle2") == 0) {
@@ -123,7 +123,7 @@ private:
 
     bool turtle_spawning_service_ready_;
     bool turtle_spawned_;
-    rclcpp::Client<turtlesim::srv::Spawn>::SharedPtr spawner_{nullptr};
+    rclcpp::Client<turtlesim_msgs::srv::Spawn>::SharedPtr spawner_{nullptr};
     rclcpp::TimerBase::SharedPtr timer_{nullptr};
     rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr publisher_{nullptr};
     std::shared_ptr<tf2_ros::TransformListener> tf_listener_{nullptr};

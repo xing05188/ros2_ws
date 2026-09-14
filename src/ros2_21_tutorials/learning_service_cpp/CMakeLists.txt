@@ -15,10 +15,16 @@ find_package(rclcpp REQUIRED)
 find_package(learning_interface REQUIRED)
 
 add_executable(service_adder_server src/service_adder_server.cpp)
-ament_target_dependencies(service_adder_server rclcpp learning_interface)
+target_link_libraries(service_adder_server
+  rclcpp::rclcpp
+  ${learning_interface_TARGETS}
+)
 
 add_executable(service_adder_client src/service_adder_client.cpp)
-ament_target_dependencies(service_adder_client rclcpp learning_interface)
+target_link_libraries(service_adder_client
+  rclcpp::rclcpp
+  ${learning_interface_TARGETS}
+)
 
 install(TARGETS
   service_adder_server

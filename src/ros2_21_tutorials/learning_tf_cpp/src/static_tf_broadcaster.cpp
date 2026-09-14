@@ -4,7 +4,7 @@
 ***/
 
 #include "rclcpp/rclcpp.hpp"                         // ROS2 C++接口库
-#include "tf2/LinearMath/Quaternion.h"               // 四元数计算库
+#include "tf2/LinearMath/Quaternion.hpp"             // 四元数计算库
 #include "tf2_ros/static_transform_broadcaster.h"    // TF静态坐标系广播器类
 #include "geometry_msgs/msg/transform_stamped.hpp"   // 坐标变换消息
 

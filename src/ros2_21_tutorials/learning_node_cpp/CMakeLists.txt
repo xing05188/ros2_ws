@@ -13,7 +13,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_executable(node_helloworld_class src/node_helloworld_class.cpp)
-ament_target_dependencies(node_helloworld_class rclcpp)
+target_link_libraries(node_helloworld_class
+  rclcpp::rclcpp
+)
 
 install(TARGETS
   node_helloworld_class

@@ -13,7 +13,9 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 
 add_executable(param_declare src/param_declare.cpp)
-ament_target_dependencies(param_declare rclcpp)
+target_link_libraries(param_declare
+  rclcpp::rclcpp
+)
 
 install(TARGETS
   param_declare

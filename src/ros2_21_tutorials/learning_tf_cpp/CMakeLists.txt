@@ -12,44 +12,41 @@ find_package(rclcpp REQUIRED)
 find_package(tf2 REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(turtlesim REQUIRED)
+find_package(turtlesim_msgs REQUIRED)
 
 
 add_executable(static_tf_broadcaster src/static_tf_broadcaster.cpp)
-ament_target_dependencies(
-   static_tf_broadcaster
-   geometry_msgs
-   rclcpp
-   tf2
-   tf2_ros
+target_link_libraries(static_tf_broadcaster
+  geometry_msgs::geometry_msgs
+  rclcpp::rclcpp
+  tf2::tf2
+  tf2_ros::tf2_ros
 )
 
 add_executable(turtle_tf_broadcaster src/turtle_tf_broadcaster.cpp)
-ament_target_dependencies(
-    turtle_tf_broadcaster
-    geometry_msgs
-    rclcpp
-    tf2
-    tf2_ros
-    turtlesim
+target_link_libraries(turtle_tf_broadcaster
+  rclcpp::rclcpp
+  geometry_msgs::geometry_msgs
+  tf2::tf2
+  tf2_ros::tf2_ros
+  turtlesim_msgs::turtlesim_msgs
 )
 
 add_executable(tf_listener src/tf_listener.cpp)
-ament_target_dependencies(
-    tf_listener
-    geometry_msgs
-    rclcpp
-    tf2
-    tf2_ros
+target_link_libraries(tf_listener
+  rclcpp::rclcpp
+  geometry_msgs::geometry_msgs
+  tf2::tf2
+  tf2_ros::tf2_ros
 )
 
 add_executable(turtle_following src/turtle_following.cpp)
-ament_target_dependencies(
-    turtle_following
-    geometry_msgs
-    rclcpp
-    tf2
-    tf2_ros
-    turtlesim
+target_link_libraries(turtle_following
+  rclcpp::rclcpp
+  geometry_msgs::geometry_msgs
+  tf2::tf2
+  tf2_ros::tf2_ros
+  turtlesim_msgs::turtlesim_msgs
 )
 
 install(TARGETS
